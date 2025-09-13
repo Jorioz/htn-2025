@@ -4,18 +4,20 @@ import { clients, isInvalidClientId, removeClient } from '../connections';
 
 export async function GET(req) {
     const { searchParams } = new URL(req.url);
-    const delta = Number(searchParams.get('delta'));
+    const voltage = Number(searchParams.get('voltage'));
+    const current = Number(searchParams.get('current'));
+    const power = Number(searchParams.get('power'));
     const userId = Number(searchParams.get('userid'));
-
+    console.log("userid",userId)
     if (isInvalidClientId(userId)) {
         return NextResponse.json({ error: 'Client not found' }, { status: 404 });
     }
-    if (!delta || delta <= 0) {
+    if (power < 0 || power === null) {
         return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
     }
 
     const connection = clients.connections.get(userId);
-    connection.totalPower += delta;
+    connection.totalPower += power;
     
     if (connection.stopRequested) {
         removeClient(userId);
