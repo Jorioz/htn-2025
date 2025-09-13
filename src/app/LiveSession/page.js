@@ -1,7 +1,8 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 import chargers from '../chargers';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import WaitingBanner from './waitBanner';
 
 export default function LiveSession() {
     const searchParams = useSearchParams();
@@ -15,6 +16,24 @@ export default function LiveSession() {
     });
     const [stopped, setStopped] = useState(false);
 
+    const [waiting, setWaiting] = useState(true);
+
+    useEffect(() => {
+        (async () => {
+            while (true) {
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                const result = await fetch(`/api/get_stats?userid=${chargerId}`);
+
+                const data = await result.json();
+                if (data) {
+                    setWaiting(false);
+                    setData(data);
+                }
+            }
+        })();
+    });
+
     if (!charger) {
         return <main className="min-h-screen flex items-center justify-center">Charger not found (id: {chargerId}).</main>;
     }
@@ -26,6 +45,7 @@ export default function LiveSession() {
                     Live Session
                 </h1>
                 <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
+                    <WaitingBanner visible={waiting}/>
                     <div className="text-2xl font-semibold flex justify-between items-center">
                         <span className="text-gray-600">Name</span>
                         <span className="text-gray-900 bg-gray-100 rounded-lg px-4 py-2 min-w-[120px] text-right">{charger.name}</span>
@@ -39,9 +59,9 @@ export default function LiveSession() {
                         <span className="text-gray-900 bg-gray-100 rounded-lg px-4 py-2 min-w-[120px] text-right">${charger.rate}/kWh</span>
                     </div>
                     {[{ label: 'Power used', value: `${data.power} kW` },
-                      { label: 'Time', value: data.time },
-                      { label: 'Cost', value: `$${data.cost}` },
-                      { label: 'Rate', value: `$${data.rate}/kWh` },
+                    { label: 'Time', value: data.time },
+                    { label: 'Cost', value: `$${data.cost}` },
+                    { label: 'Rate', value: `$${data.rate}/kWh` },
                     ].map(({ label, value }) => (
                         <div
                             key={label}
