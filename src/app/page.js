@@ -1,7 +1,6 @@
 "use client";
 import Map from "./components/Map";
 import Navbar from "@/components/Navbar";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import NearbyWidget from "@/components/NearbyWidget";
@@ -11,11 +10,6 @@ export default function Home() {
     const [isVisible, setIsVisible] = useState(false);
     const [isToggleAvailable, setIsToggleAvailable] = useState(false);
     const [showAvailable, setShowAvailable] = useState(false);
-    const router = useRouter();
-    const isLoggedIn =
-        typeof window !== "undefined"
-            ? localStorage.getItem("isLoggedIn") === "true"
-            : false;
     return (
         <main className="h-svh bg-gray-200 flex flex-col relative overflow-y-hidden">
             <Navbar />
