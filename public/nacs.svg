@@ -1,0 +1,11 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M60 94.5C82.5 94.5 100.5 76.5 100.5 57C100.5 39 90 25.5 72 25.5H48C30 25.5 19.5 39 19.5 57C19.5 78 37.5 94.5 60 94.5Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="76.5" cy="79.5" r="3" fill="white"/>
+<circle cx="60" cy="78" r="4.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="43.5" cy="79.5" r="3" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M72 31.5C72.6703 31.5 73.3296 31.5222 73.9772 31.5664C68.3758 34.2041 64.5 39.8994 64.5 46.5C64.5 55.6127 71.8873 63 81 63C86.5735 63 91.5015 60.2366 94.4888 56.0052C94.4963 56.3331 94.5 56.665 94.5 57C94.5 64.9411 91.0255 72.5348 85.2471 78.2761C78.4443 72.4901 69.6297 69 60 69C50.3703 69 41.5557 72.4901 34.7522 78.2744C28.9745 72.5348 25.5 64.9411 25.5 57C25.5 56.6645 25.5037 56.3321 25.5111 56.0028C28.4973 60.2359 33.4259 63 39 63C48.1127 63 55.5 55.6127 55.5 46.5C55.5 39.8994 51.6242 34.2041 46.0244 31.5656C46.6704 31.5222 47.3297 31.5 48 31.5H72Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="81" cy="46.5" r="10.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="39" cy="46.5" r="10.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="81" cy="46.5" r="3" fill="white"/>
+<circle cx="39" cy="46.5" r="3" fill="white"/>
+</svg>
