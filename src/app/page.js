@@ -1,52 +1,22 @@
 'use client';
-
-import { useState } from 'react';
+import Map from "./components/Map";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-    const [data, setData] = useState({
-        power: '—',
-        time: '—',
-        cost: '—',
-        rate: '—',
-    });
-
-    const handleStop = () => {
-        /* TODO: wire-up stop logic */
-    };
-
-    return (
-        <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-between p-8">
-            <div className="w-full max-w-lg">
-                <h1 className="text-4xl font-extrabold text-center mb-10 text-gray-800 tracking-tight">
-                    Live Session
-                </h1>
-
-                <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
-                    {[
-                        { label: 'Power used', value: `${data.power} kW` },
-                        { label: 'Time', value: data.time },
-                        { label: 'Cost', value: `$${data.cost}` },
-                        { label: 'Rate', value: `$${data.rate}/kWh` },
-                    ].map(({ label, value }) => (
-                        <div
-                            key={label}
-                            className="flex justify-between items-center text-2xl font-semibold"
-                        >
-                            <span className="text-gray-600">{label}</span>
-                            <span className="text-gray-900 bg-gray-100 rounded-lg px-4 py-2 min-w-[120px] text-right">
-                                {value}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <button
-                onClick={handleStop}
-                className="mt-12 px-10 py-4 bg-red-600 text-white text-xl font-bold rounded-xl shadow-lg hover:bg-red-700 hover:scale-105 active:scale-95 transition transform"
-            >
-                Stop
-            </button>
-        </main>
-    );
+  const router = useRouter();
+  const isLoggedIn = typeof window !== "undefined" ? localStorage.getItem("isLoggedIn") === "true" : false;
+  return (
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-center p-8" style={{ position: "relative" }}>
+      <button
+        onClick={() => router.push(isLoggedIn ? "/Account" : "/Login")}
+        className="px-6 py-3 bg-blue-600 text-white text-lg font-semibold rounded-xl shadow hover:bg-blue-700 transition"
+        style={{ position: "absolute", top: 32, right: 32 }}
+      >
+        {isLoggedIn ? "Account" : "Log In"}
+      </button>
+      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-8 flex items-center justify-center">
+        <Map />
+      </div>
+    </main>
+  );
 }
