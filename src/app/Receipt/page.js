@@ -13,15 +13,14 @@ export default function ReceiptPage() {
     async function fetchCharger() {
       const res = await fetch('/api/chargers');
       const data = await res.json();
-      console.log(data);
       const found = data.find(c => c._id === chargerId);
       setCharger(found);
     }
     fetchCharger();
   }, [chargerId]);
 
-  const kwh = 24.5; // change
-  const total = charger ? (charger.rate * kwh).toFixed(2) : '0.00';
+  const kwh = searchParams.get('kwh');
+  const total = searchParams.get('total');
 
   if (!charger) {
     return <main className="min-h-screen flex items-center justify-center">Loading...</main>;

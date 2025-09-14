@@ -26,7 +26,7 @@ export default function Summary() {
   const total = charger ? (charger.rate * kwh).toFixed(2) : '0.00';
 
   function handleConfirm() {
-    router.push(`/Receipt?id=${chargerId}`);
+    router.push(`/Receipt?id=${chargerId}&kwh=${kwh}&total=${total}`);
   }
 
   if (!charger) {

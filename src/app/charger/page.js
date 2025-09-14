@@ -97,7 +97,7 @@ export default function page() {
             <div className="absolute bottom-6 left-0 w-full flex justify-center">
                 <button
                     className="bg-emerald-300 rounded-full p-5 w-11/12 text-center font-bold"
-                    onClick={handleCheckIn()}
+                    onClick={handleCheckIn}
                 >
                     CHECK IN
                 </button>
