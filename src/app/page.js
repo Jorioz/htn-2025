@@ -1,5 +1,5 @@
 "use client";
-import Map from "./components/Map";
+import Map from "../components/Map";
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";

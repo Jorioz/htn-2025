@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import chargers from "../chargers";
+import chargers from "../app/chargers";
 
 export default function Map({ showAvailable }) {
     const mapRef = useRef(null);
@@ -117,7 +117,7 @@ export default function Map({ showAvailable }) {
             });
             marker.addListener("click", () => {
                 const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${charger.lat},${charger.lng}`;
-                const viewChargerURL = `/charger`;
+                const viewChargerURL = `/charger?id=${charger.id}`;
                 infoWindowRef.current.setContent(
                     `<div style='font-size:15px; color:black; width:200px;'><strong>${charger.name}</strong><br />` +
                         `Available: ${charger.available ? "Yes" : "No"}<br />` +
