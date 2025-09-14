@@ -166,9 +166,7 @@ export default function LiveSession() {
                             </button>
                             <button
                                 className="px-10 py-4 bg-blue-600 text-white text-xl font-bold rounded-xl shadow-lg hover:bg-blue-700 transition"
-                                onClick={() =>
-                                    (window.location.href = `/Summary?id=${chargerId}`)
-                                }
+                                onClick={handleEndSession()}
                             >
                                 End Session
                             </button>
