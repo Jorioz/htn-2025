@@ -1,5 +1,5 @@
 "use client";
-import Map from "./components/Map";
+import Map from "../components/Map";
 import Navbar from "@/components/Navbar";
 import { useState, useEffect } from "react";
 import { FaCheckCircle } from "react-icons/fa";
@@ -10,7 +10,7 @@ export default function Home({ chargers: chargersProp }) {
     const [isVisible, setIsVisible] = useState(false);
     const [isToggleAvailable, setIsToggleAvailable] = useState(false);
     const [showAvailable, setShowAvailable] = useState(false);
-    
+
     return (
         <main className="h-svh bg-gray-200 flex flex-col relative overflow-y-hidden">
             <Navbar />

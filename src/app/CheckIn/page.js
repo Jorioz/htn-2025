@@ -1,27 +1,56 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import chargers from '../chargers';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function CheckIn() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const idParam = searchParams.get('id');
-  const chargerId = Number(idParam);
-  const charger = chargers.find(c => c.id === chargerId);
+  const chargerId = searchParams.get('id');
+
+  const [charger, setCharger] = useState(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const isLoggedIn = localStorage.getItem("isLoggedIn");
-      if (isLoggedIn !== "true") {
-        const current = `/CheckIn?id=${chargerId}`;
-        router.push(`/Login?from=${encodeURIComponent(current)}`);
-      }
+    async function fetchCharger() {
+      const res = await fetch('/api/chargers');
+      const data = await res.json();
+      console.log(data);
+      const found = data.find(c => c._id === chargerId);
+      setCharger(found);
     }
-  }, [router, chargerId]);
+    fetchCharger();
+  }, [chargerId]);
+
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const isLoggedIn = localStorage.getItem("isLoggedIn");
+  //     if (isLoggedIn !== "true") {
+  //       const current = `/CheckIn?id=${chargerId}`;
+  //       router.push(`/Login?from=${encodeURIComponent(current)}`);
+  //     }
+  //   }
+  // }, [router, chargerId]);
 
   if (!charger) {
-    return <main className="min-h-screen flex items-center justify-center">Charger not found. (id: {idParam})</main>;
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        Loading...
+      </main>
+    );
+  }
+
+  async function handleStartCharging() {
+    const userId = "1"; // TODO user id
+    await fetch("/api/chargers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "updateSession",
+        chargerId: charger._id,
+        available: false,
+        customerId: userId,
+      }),
+    });
+    router.push(`/LiveSession?id=${charger._id}`);
   }
 
   return (
@@ -46,7 +75,7 @@ export default function CheckIn() {
         </div>
       </div>
       <button
-        onClick={() => router.push(`/LiveSession?id=${charger.id}`)}
+        onClick={handleStartCharging}
         className="mt-12 px-10 py-4 bg-green-600 text-white text-xl font-bold rounded-xl shadow-lg hover:bg-green-700 hover:scale-105 active:scale-95 transition transform"
       >
         Start Charging
