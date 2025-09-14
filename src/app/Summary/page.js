@@ -1,6 +1,7 @@
 'use client';
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from 'react';
+import { globals } from "../clientGlobals";
 
 export default function Summary() {
   const router = useRouter();
@@ -20,7 +21,8 @@ export default function Summary() {
     fetchCharger();
   }, [chargerId]);
 
-  const kwh = 24.5;  // change
+  const kwh = globals.connection.totalPower;
+  console.log("globals.connection.totalPower", globals.connection.totalPower);
   const total = charger ? (charger.rate * kwh).toFixed(2) : '0.00';
 
   function handleConfirm() {

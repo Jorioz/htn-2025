@@ -3,6 +3,7 @@ import { useSearchParams } from "next/navigation";
 import chargers from "../chargers";
 import { useState, useEffect } from "react";
 import WaitingBanner from "./waitBanner";
+import { globals } from "../clientGlobals";
 
 export default function LiveSession() {
     const searchParams = useSearchParams();
@@ -42,6 +43,8 @@ export default function LiveSession() {
                 if (data) {
                     setWaiting(false);
                     setData(data);
+
+                    globals.connection.totalPower = data.totalPower;
                 }
             }
         })();
