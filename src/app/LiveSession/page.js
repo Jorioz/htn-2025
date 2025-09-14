@@ -34,6 +34,12 @@ export default function LiveSession() {
         })();
     });
 
+    useEffect(() => {
+        if (stopped) {
+            fetch(`/api/request_stop?userid=${chargerId}`);
+        }
+    }, [stopped, chargerId]);
+
     if (!charger) {
         return <main className="min-h-screen flex items-center justify-center">Charger not found (id: {chargerId}).</main>;
     }
