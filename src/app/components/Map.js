@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef } from "react";
-import chargers from "../chargers";
 
-export default function Map({ showAvailable }) {
+export default function Map({ chargers, showAvailable }) {
+
     const mapRef = useRef(null);
     const mapInstance = useRef(null);
     const infoWindowRef = useRef(null);
