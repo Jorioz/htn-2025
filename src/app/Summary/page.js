@@ -1,16 +1,26 @@
 'use client';
 import { useRouter, useSearchParams } from "next/navigation";
-import chargers from '../chargers';
+import { useEffect, useState } from 'react';
 
-export default function SummaryPage() {
+export default function Summary() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const idParam = searchParams.get('id');
-  const chargerId = Number(idParam);
-  const charger = chargers.find(c => c.id === chargerId);
+  const chargerId = searchParams.get('id');
 
-  // change
-  const kwh = 24.5;
+  const [charger, setCharger] = useState(null);
+
+  useEffect(() => {
+    async function fetchCharger() {
+      const res = await fetch('/api/chargers');
+      const data = await res.json();
+      console.log(data);
+      const found = data.find(c => c._id === chargerId);
+      setCharger(found);
+    }
+    fetchCharger();
+  }, [chargerId]);
+
+  const kwh = 24.5;  // change
   const total = charger ? (charger.rate * kwh).toFixed(2) : '0.00';
 
   function handleConfirm() {
@@ -18,7 +28,7 @@ export default function SummaryPage() {
   }
 
   if (!charger) {
-    return <main className="min-h-screen flex items-center justify-center">Charger not found. (id: {idParam})</main>;
+    return <main className="min-h-screen flex items-center justify-center">Loading...</main>;
   }
 
   return (

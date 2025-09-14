@@ -6,8 +6,8 @@ import WaitingBanner from "./waitBanner";
 
 export default function LiveSession() {
     const searchParams = useSearchParams();
-    const chargerId = parseInt(searchParams.get("id"));
-    const charger = chargers.find((c) => c.id === chargerId);
+    const chargerId = searchParams.get('id');
+    const [charger, setCharger] = useState(null);
     const [data, setData] = useState({
         power: "—",
         time: "—",
@@ -17,6 +17,17 @@ export default function LiveSession() {
     const [stopped, setStopped] = useState(false);
 
     const [waiting, setWaiting] = useState(true);
+
+    useEffect(() => {
+        async function fetchCharger() {
+        const res = await fetch('/api/chargers');
+        const data = await res.json();
+        console.log(data);
+        const found = data.find(c => c._id === chargerId);
+        setCharger(found);
+        }
+        fetchCharger();
+    }, [chargerId]);
 
     useEffect(() => {
         (async () => {
@@ -43,12 +54,22 @@ export default function LiveSession() {
     }, [stopped, chargerId]);
 
     if (!charger) {
-        return (
-            <main className="min-h-screen flex items-center justify-center">
-                Charger not found (id: {chargerId}).
-            </main>
-        );
+        return <main className="min-h-screen flex items-center justify-center"> Loading...</main>;
     }
+
+    async function handleEndSession() {
+        await fetch("/api/chargers", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+            action: "updateSession",
+            chargerId: charger._id,
+            available: true,
+            customerId: null,
+            }),
+        });
+        window.location.href = `/Summary?id=${chargerId}`;
+        }
 
     return (
         <main className="h-svh bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center">
@@ -145,9 +166,7 @@ export default function LiveSession() {
                             </button>
                             <button
                                 className="px-10 py-4 bg-blue-600 text-white text-xl font-bold rounded-xl shadow-lg hover:bg-blue-700 transition"
-                                onClick={() =>
-                                    (window.location.href = `/Summary?id=${chargerId}`)
-                                }
+                                onClick={handleEndSession()}
                             >
                                 End Session
                             </button>
